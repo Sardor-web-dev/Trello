@@ -16,7 +16,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ title }) => {
 	return (
 		<Card
 			draggable
-			onDragStart={(e) => {
+			onDragStart={(e) => { 
 				setClassName("bg-red-500");
 				setTimeout(() => {
 					setClassName("hidden");

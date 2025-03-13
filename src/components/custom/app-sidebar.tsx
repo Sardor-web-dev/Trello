@@ -10,7 +10,7 @@ export function AppSidebar() {
 	return (
 		<Sidebar>
 			<SidebarHeader>
-				<div>App Name</div>
+				<div>Trello</div>
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup>
