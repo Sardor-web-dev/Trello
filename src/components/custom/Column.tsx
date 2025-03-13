@@ -49,7 +49,7 @@ export const Column: React.FC<ColumnProps> = ({ title, tasks, onTaskDrop, onTask
         ))}
       </ScrollArea>
       <div className="p-4 bg-gray-200 flex flex-col space-y-2">
-        <Input value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Новая задача..." />
+        <Input value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Создайте свою задачу..." />
         <Button onClick={handleAddTask} variant="outline">
           Добавить задачу
         </Button>

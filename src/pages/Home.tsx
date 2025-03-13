@@ -1,5 +1,5 @@
 import { Column } from "@/components/custom/Column";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface Task {
   id: string;
@@ -13,12 +13,11 @@ const Home: React.FC = () => {
     done: [],
   });
 
-  const handleTaskDrop = (taskId: string, targetColumn: string) => {
+  const TaskDrop = (taskId: string, targetColumn: string) => {
     setTasks((prev) => {
       let taskToMove: Task | undefined;
       const newColumns = { ...prev };
 
-      // Удаляем задачу из старой колонки
       Object.keys(newColumns).forEach((col) => {
         newColumns[col] = newColumns[col].filter((task) => {
           if (task.id === taskId) {
@@ -29,7 +28,6 @@ const Home: React.FC = () => {
         });
       });
 
-      // Добавляем задачу в новую колонку
       if (taskToMove) {
         newColumns[targetColumn] = [...newColumns[targetColumn], taskToMove];
       }
@@ -47,9 +45,9 @@ const Home: React.FC = () => {
 
   return (
     <section className="flex items-start justify-start gap-6">
-      <Column title="Todo" tasks={tasks.todo} onTaskDrop={handleTaskDrop} onTaskAdd={handleTaskAdd} columnKey="todo" />
-      <Column title="In Progress" tasks={tasks.inProgress} onTaskDrop={handleTaskDrop} onTaskAdd={handleTaskAdd} columnKey="inProgress" />
-      <Column title="Done" tasks={tasks.done} onTaskDrop={handleTaskDrop} onTaskAdd={handleTaskAdd} columnKey="done" />
+      <Column title="Todo" tasks={tasks.todo} onTaskDrop={TaskDrop} onTaskAdd={handleTaskAdd} columnKey="todo" />
+      <Column title="In Progress" tasks={tasks.inProgress} onTaskDrop={TaskDrop} onTaskAdd={handleTaskAdd} columnKey="inProgress" />
+      <Column title="Done" tasks={tasks.done} onTaskDrop={TaskDrop} onTaskAdd={handleTaskAdd} columnKey="done" />
     </section>
   );
 };
