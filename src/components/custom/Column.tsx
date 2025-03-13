@@ -38,7 +38,7 @@ export const Column: React.FC<ColumnProps> = ({ title, tasks, onTaskDrop, onTask
           onTaskDrop(taskId, columnKey);
         }
       }}
-      className="w-[350px] flex flex-col bg-gray-100 shadow-md rounded-2xl overflow-hidden"
+      className="w-[350px] flex flex-col cursor-pointer bg-gray-100 shadow-md rounded-2xl overflow-hidden"
     >
       <div className="p-4 bg-gray-200 flex justify-between items-center">
         <h2 className="text-lg font-semibold">{title}</h2>
@@ -52,7 +52,7 @@ export const Column: React.FC<ColumnProps> = ({ title, tasks, onTaskDrop, onTask
       </ScrollArea>
       <div className="p-4 bg-gray-200 flex flex-col space-y-2">
         <Input value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Создайте свою задачу..." />
-        <Button onClick={handleAddTask} variant="outline">
+        <Button className="cursor-pointer" onClick={handleAddTask} variant="outline">
           Добавить задачу
         </Button>
       </div>

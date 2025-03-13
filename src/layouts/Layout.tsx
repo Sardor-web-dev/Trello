@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = () => {
 			<SidebarProvider>
 				<AppSidebar />
 				<main className="w-full p-4">
-					<SidebarTrigger />
+					<SidebarTrigger className="cursor-pointer" />
 					<Outlet />
 				</main>
 			</SidebarProvider>
