@@ -14,26 +14,20 @@ const Home: React.FC = () => {
   });
 
   const TaskDrop = (taskId: string, targetColumn: string) => {
-    setTasks((prev) => {
-      let taskToMove: Task | undefined;
-      const newColumns = { ...prev };
-
-      Object.keys(newColumns).forEach((col) => {
-        newColumns[col] = newColumns[col].filter((task) => {
-          if (task.id === taskId) {
-            taskToMove = task;
-            return false;
-          }
-          return true;
-        });
-      });
-
-      if (taskToMove) {
-        newColumns[targetColumn] = [...newColumns[targetColumn], taskToMove];
-      }
-
-      return newColumns;
-    });
+	setTasks((prev) => {
+	  let taskToMove: Task | undefined;
+	  for (const col in prev) {
+		const index = prev[col].findIndex((task) => task.id === taskId);
+		if (index !== -1) {
+		  taskToMove = prev[col][index];
+		  prev[col].splice(index, 1);
+		  break;
+		}
+	  }
+	  return taskToMove
+		? { ...prev, [targetColumn]: [...prev[targetColumn], taskToMove] }
+		: prev;
+	});
   };
 
   const handleTaskAdd = (columnKey: string, title: string) => {
