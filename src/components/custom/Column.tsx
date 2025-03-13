@@ -1,34 +1,59 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import React from "react";
+import React, { useState } from "react";
 import { TaskCard } from "./Task";
+import { Input } from "@/components/ui/input";
 
-interface ColumnProps {
-	title: string;
-	array?: string[];
+interface Task {
+  id: string;
+  title: string;
 }
 
-export const Column: React.FC<ColumnProps> = ({ title }) => {
-	return (
-		<Card
-			onDragOver={(e) => e.preventDefault()}
-			// onDragEnter={}
-			// onDragLeave={}
-			// onDrop={}
-			className="w-[350px] flex flex-col bg-gray-100 shadow-md rounded-2xl overflow-hidden"
-		>
-			<div className="p-4 bg-gray-200 flex justify-between items-center">
-				<h2 className="text-lg font-semibold">{title}</h2>
-			</div>
-			<ScrollArea className="flex-1 p-4 space-y-3">
-				<TaskCard title="Почистит обувь" />
-			</ScrollArea>
-			<div className="p-4 bg-gray-200 flex justify-center">
-				<Button variant="outline" className="w-full">
-					Create new task
-				</Button>
-			</div>
-		</Card>
-	);
+interface ColumnProps {
+  title: string;
+  tasks: Task[];
+  onTaskDrop: (taskId: string, column: string) => void;
+  onTaskAdd: (column: string, title: string) => void;
+  columnKey: string;
+}
+
+export const Column: React.FC<ColumnProps> = ({ title, tasks, onTaskDrop, onTaskAdd, columnKey }) => {
+  const [newTask, setNewTask] = useState("");
+
+  const handleAddTask = () => {
+    if (newTask.trim() !== "") {
+      onTaskAdd(columnKey, newTask.trim());
+      setNewTask("");
+    }
+  };
+
+  return (
+    <Card
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => {
+        e.preventDefault();
+        const taskId = e.dataTransfer.getData("taskId");
+        if (taskId) {
+          onTaskDrop(taskId, columnKey);
+        }
+      }}
+      className="w-[350px] flex flex-col bg-gray-100 shadow-md rounded-2xl overflow-hidden"
+    >
+      <div className="p-4 bg-gray-200 flex justify-between items-center">
+        <h2 className="text-lg font-semibold">{title}</h2>
+      </div>
+      <ScrollArea className="flex-1 p-4 space-y-3">
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
+        ))}
+      </ScrollArea>
+      <div className="p-4 bg-gray-200 flex flex-col space-y-2">
+        <Input value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Новая задача..." />
+        <Button onClick={handleAddTask} variant="outline">
+          Добавить задачу
+        </Button>
+      </div>
+    </Card>
+  );
 };
