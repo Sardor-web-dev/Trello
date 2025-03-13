@@ -43,10 +43,12 @@ export const Column: React.FC<ColumnProps> = ({ title, tasks, onTaskDrop, onTask
       <div className="p-4 bg-gray-200 flex justify-between items-center">
         <h2 className="text-lg font-semibold">{title}</h2>
       </div>
-      <ScrollArea className="flex-1 p-4 space-y-3">
+      <ScrollArea>
+        <div className="flex flex-col gap-4">
         {tasks.map((task) => (
           <TaskCard key={task.id} task={task} />
         ))}
+        </div>
       </ScrollArea>
       <div className="p-4 bg-gray-200 flex flex-col space-y-2">
         <Input value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Создайте свою задачу..." />
