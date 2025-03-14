@@ -20,6 +20,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData("taskId", task.id);
+        setClassName("bg-red-500")
         setTimeout(() => setClassName("hidden"), 0);
       }}
       onDragEnd={() => setClassName("flex")}
